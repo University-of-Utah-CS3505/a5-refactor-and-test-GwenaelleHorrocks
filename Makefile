@@ -1,11 +1,12 @@
 CC = g++
 CFLAGS = -Wall
+GOOGLETEST = ../googletest/
 
-TrieTest: Trie.o TrieTest.o
-	$(CC) $(CFLAGS) -o TrieTest TrieTest.o Trie.o
+tests: Trie.o TrieTests.o
+	$(CC) $(CFLAGS) -o tests TrieTests.o Trie.o
 
-TrieTest.o: Trie.h Trie.cpp TrieTest.cpp
-	$(CC) $(CFLAGS) -c TrieTest.cpp
+TrieTests.o: Trie.h Trie.cpp TrieTests.cpp
+	$(CC) $(CFLAGS) -c TrieTests.cpp
 
 Trie.o: Trie.h Trie.cpp
 	$(CC) $(CFLAGS) -c Trie.cpp
