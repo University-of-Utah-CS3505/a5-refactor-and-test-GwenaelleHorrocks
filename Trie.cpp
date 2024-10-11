@@ -72,6 +72,9 @@ bool Trie::isWord(string word) {
 
     // get the index of the first letter in word, set nextTrie equal to the trie in this trie's index
     int index = word[0] - 'a';
+    if (index < 0 || index > 25) {
+        return false;
+    }
     Trie* nextTrie = this->alphabet[index];
 
     if (!nextTrie) {
