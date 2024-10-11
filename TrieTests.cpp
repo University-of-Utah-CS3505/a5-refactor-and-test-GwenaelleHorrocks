@@ -17,6 +17,12 @@ TEST(TrieTests, addEmpty) {
     ASSERT_FALSE(trie.isWord(""));
 };
 
+TEST(TrieTests, checkEmpty) {
+    Trie trie;
+    trie.addWord("cat");
+    ASSERT_FALSE(trie.isWord(""));
+};
+
 TEST(TrieTests, returnEmptyPrefix) {
     Trie trie;    
     trie.addWord("hello");
@@ -31,12 +37,51 @@ TEST(TrieTests, returnEmptyPrefix) {
     ASSERT_EQ(vector, trie.allWordsStartingWithPrefix(""));
 };
 
+TEST(TrieTests, returnPrefixWord) {
+    Trie trie;    
+    trie.addWord("hello");
+    trie.addWord("blueberry");
+    trie.addWord("apple");
+
+    vector<std::string> vector;
+    vector.push_back("apple");
+
+    ASSERT_EQ(vector, trie.allWordsStartingWithPrefix("apple"));
+};
+
+TEST(TrieTests, basicReturnPrefix) {
+    Trie trie;    
+    trie.addWord("hello");
+    trie.addWord("blueberry");
+    trie.addWord("apple");
+    trie.addWord("applepie");
+    trie.addWord("applesquash");
+
+    vector<std::string> vectorExpected;
+    vectorExpected.push_back("apple");
+    vectorExpected.push_back("applepie");
+    vectorExpected.push_back("applesquash");
+
+    ASSERT_EQ(vectorExpected, trie.allWordsStartingWithPrefix("apple"));
+};
+
 TEST(TrieTests, returnEmpty) {
     Trie trie;   
     vector<std::string> vector = trie.allWordsStartingWithPrefix(""); 
 
     ASSERT_TRUE(vector.empty());
 };
+
+TEST(TrieTests, returnNonExistentPrefix) {
+    Trie trie; 
+    trie.addWord("cat");
+    trie.addWord("dog");
+    trie.addWord("rat");
+    vector<std::string> vector = trie.allWordsStartingWithPrefix("f"); 
+
+    ASSERT_TRUE(vector.empty());
+};
+
 
 TEST(TrieTests, isWordCapital) {
     Trie trie;
@@ -46,6 +91,82 @@ TEST(TrieTests, isWordCapital) {
     ASSERT_FALSE(trie.isWord("Hello"));
 }
 
+TEST(TrieTests, copyConstructorEquals){
+    Trie trie;
+    trie.addWord("cat");
+    trie.addWord("dog");
+    trie.addWord("rat");
+    Trie copy = trie;
+
+    vector<std::string> vectorOriginal = trie.allWordsStartingWithPrefix("");
+    vector<std::string> vectorCopy = copy.allWordsStartingWithPrefix("");
+
+    ASSERT_EQ(vectorOriginal, vectorCopy);
+}
+
+TEST(TrieTests, copyConstructorNotDependent){
+    Trie trie;
+    trie.addWord("cat");
+    trie.addWord("dog");
+    trie.addWord("rat");
+    Trie copy = trie;
+    copy.addWord("penguin");
+
+    vector<std::string> vectorOriginal = trie.allWordsStartingWithPrefix("");
+    vector<std::string> vectorCopy = copy.allWordsStartingWithPrefix("");
+
+    ASSERT_NE(vectorOriginal, vectorCopy);
+}
+
+TEST(TrieTests, copyConstructorEmpty){
+    Trie trie;
+    Trie copy = trie;
+
+    vector<std::string> vectorOriginal = trie.allWordsStartingWithPrefix("");
+    vector<std::string> vectorCopy = copy.allWordsStartingWithPrefix("");
+
+    ASSERT_EQ(vectorOriginal, vectorCopy);
+}
+
+TEST(TrieTests, assignmentOperatorEquals){
+    Trie trie;
+    trie.addWord("cat");
+    trie.addWord("dog");
+    trie.addWord("rat");
+    Trie copy;
+    copy = trie;
+
+    vector<std::string> vectorOriginal = trie.allWordsStartingWithPrefix("");
+    vector<std::string> vectorCopy = copy.allWordsStartingWithPrefix("");
+
+    ASSERT_EQ(vectorOriginal, vectorCopy);
+}
+
+TEST(TrieTests, assignmentOperatorNotDependent){
+    Trie trie;
+    trie.addWord("cat");
+    trie.addWord("dog");
+    trie.addWord("rat");
+    Trie copy;
+    copy = trie;
+    copy.addWord("penguin");
+
+    vector<std::string> vectorOriginal = trie.allWordsStartingWithPrefix("");
+    vector<std::string> vectorCopy = copy.allWordsStartingWithPrefix("");
+
+    ASSERT_NE(vectorOriginal, vectorCopy);
+}
+
+TEST(TrieTests, assignmentOperatorEmpty){
+    Trie trie;
+    Trie copy;
+    copy = trie;
+
+    vector<std::string> vectorOriginal = trie.allWordsStartingWithPrefix("");
+    vector<std::string> vectorCopy = copy.allWordsStartingWithPrefix("");
+
+    ASSERT_EQ(vectorOriginal, vectorCopy);
+}
 
 
 
