@@ -9,19 +9,13 @@ using std::swap;
 Trie::Trie() {}
 
 Trie::~Trie() {
-    // for (int i = 0; i < 26; i++) {
-    //     if (dictionary[i]) {
-    //         //recursively calls the destructor on every initialized node in the trie
-    //         delete dictionary[i];
-    //     }
-    // }
 }
 
 Trie::Trie(const Trie &other) {
     // copy data memebers of other Trie object
     validWord = other.validWord;
     for (auto pair : other.dictionary) {
-        dictionary[pair.first] = pair.second; // Assuming dictionary is a map
+        dictionary[pair.first] = pair.second;
     }
 }
 
