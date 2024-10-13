@@ -85,17 +85,12 @@ vector<string> Trie::allWordsStartingWithPrefix(string prefix) {
     // iteratively navigate down the trie to the end of the prefix
     for (size_t i = 0; i < prefix.length(); i++) {
         char letter = prefix[i];
-        //nextTrie = currentTrie->dictionary[letter];
 
         if (letter < 'a' || letter > 'z') {
-            std::cout << "wrong letter" << std::endl;
             return prefixWords;
         }
 
-        std::cout << "how many" << std::endl;
-
         if (!currentTrie.dictionary.contains(letter)) {
-            std::cout << "ended early" << std::endl;
             return prefixWords;
         }
 
@@ -110,16 +105,13 @@ vector<string> Trie::allWordsStartingWithPrefix(string prefix) {
 }
 
 void Trie::prefixRecursive(string prefix, vector<string>& words) {
-    std::cout << "recursive" << std::endl;
     // add current word to the vector if it is marked as a valid word
     if (validWord) {
-        std::cout << "valid" << std::endl;
         words.push_back(prefix);
     }
 
     // depth-first recursion into all words that start with prefix, adding them to the vector if they are valid words
     for (auto& pair : dictionary) {
-        std::cout << "for loop" << std::endl;
         char currentLetter = pair.first;
         string newPrefix = prefix + currentLetter;
         dictionary[pair.first].prefixRecursive(newPrefix, words);
