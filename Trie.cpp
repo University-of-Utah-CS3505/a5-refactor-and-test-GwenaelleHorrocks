@@ -79,7 +79,7 @@ bool Trie::isWord(string word) {
 
 vector<string> Trie::allWordsStartingWithPrefix(string prefix) {
     vector<string> prefixWords;
-    Trie* currentTrie = this;
+    Trie currentTrie = *this;
     Trie nextTrie;
 
     // iteratively navigate down the trie to the end of the prefix
@@ -94,17 +94,17 @@ vector<string> Trie::allWordsStartingWithPrefix(string prefix) {
 
         std::cout << "how many" << std::endl;
 
-        if (!currentTrie) {
+        if (!currentTrie.dictionary.contains(letter)) {
             std::cout << "ended early" << std::endl;
             return prefixWords;
         }
 
-        currentTrie = &dictionary[letter];
+        currentTrie = currentTrie.dictionary[letter];
     }
  
     // at this point, currentTrie represents the node corresponding to the prefix
     // collect all words starting from currentTrie
-    currentTrie->prefixRecursive(prefix, prefixWords);
+    currentTrie.prefixRecursive(prefix, prefixWords);
 
     return prefixWords;
 }
