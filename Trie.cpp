@@ -9,32 +9,25 @@ using std::swap;
 Trie::Trie() {}
 
 Trie::~Trie() {
-    for (int i = 0; i < 26; i++) {
-        if (alphabet[i]) {
-            //recursively calls the destructor on every initialized node in the trie
-            delete alphabet[i];
-        }
-    }
+    // for (int i = 0; i < 26; i++) {
+    //     if (dictionary[i]) {
+    //         //recursively calls the destructor on every initialized node in the trie
+    //         delete dictionary[i];
+    //     }
+    // }
 }
 
 Trie::Trie(const Trie &other) {
     // copy data memebers of other Trie object
     validWord = other.validWord;
-    for (int i = 0; i < 26; i++) {
-        if (other.alphabet[i]) {
-            alphabet[i] = new Trie(*other.alphabet[i]);
-        }
-        else {
-            alphabet[i] = nullptr;
-        }
+    for (auto pair : other.dictionary) {
+        dictionary[pair.first] = pair.second; // Assuming dictionary is a map
     }
 }
 
 Trie& Trie::operator=(Trie other) {
     swap(validWord, other.validWord);
-    for (int i = 0; i < 26; ++i) {
-        swap(alphabet[i], other.alphabet[i]);
-    }
+    swap(dictionary, other.dictionary);
     return *this;
 }
 
@@ -47,15 +40,15 @@ void Trie::addWord(string word) {
 
     // get the index of the first letter in word, set nextTrie equal to the trie in this trie's index
     int index = word[0] - 'a';
-    Trie* nextTrie = this->alphabet[index];
+    Trie* nextTrie = this->dictionary[index];
 
     if (!nextTrie) {
         nextTrie = new Trie();
-        this->alphabet[index] = nextTrie;
+        this->dictionary[index] = nextTrie;
     }
 
     if (word.length() == 1) {
-        alphabet[index]->validWord = true;
+        dictionary[index]->validWord = true;
         return;
     }
 
@@ -75,7 +68,7 @@ bool Trie::isWord(string word) {
     if (index < 0 || index > 25) {
         return false;
     }
-    Trie* nextTrie = this->alphabet[index];
+    Trie* nextTrie = this->dictionary[index];
 
     if (!nextTrie) {
         return false;
@@ -93,7 +86,7 @@ vector<string> Trie::allWordsStartingWithPrefix(string prefix) {
     // iteratively navigate down the trie to the end of the prefix
     for (size_t i = 0; i < prefix.length(); i++) {
         int prefixIndex = prefix[i] - 'a';
-        nextTrie = currentTrie->alphabet[prefixIndex];
+        nextTrie = currentTrie->dictionary[prefixIndex];
 
         if (prefixIndex < 0 || prefixIndex >= 26) {
             return prefixWords;
@@ -121,10 +114,10 @@ void Trie::prefixRecursive(string prefix, vector<string>& words) {
 
     // depth-first recursion into all words that start with prefix, adding them to the vector if they are valid words
     for (int i = 0; i < 26; i++) {
-        if (this->alphabet[i]) {
+        if (this->dictionary[i]) {
             char currentLetter = 'a' + i;
             string newPrefix = prefix + currentLetter;
-            this->alphabet[i]->prefixRecursive(newPrefix, words);
+            this->dictionary[i]->prefixRecursive(newPrefix, words);
         }
     }
 }

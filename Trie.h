@@ -7,13 +7,15 @@ The Trie class provides functions to add and lookup various words in a dictionar
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 using std::string;
 using std::vector;
+using std::map;
 
 class Trie {
     private:
-    Trie* alphabet [26] {};
+    map<char, Trie> dictionary;
     bool validWord = false;
 
     public:
