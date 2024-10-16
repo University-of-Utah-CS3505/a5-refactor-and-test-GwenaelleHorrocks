@@ -2,13 +2,17 @@
 #include <vector>
 #include <gtest/gtest.h>
 
-// using namespace googletest;
-
 // basic isWord
 TEST(TrieTests, basicIsWord) {
     Trie trie;
     trie.addWord("hello");
     ASSERT_TRUE(trie.isWord("hello"));
+};
+
+TEST(TrieTests, destructorOnTriePointer) {
+    Trie* trie = new Trie();
+    trie -> addWord("hello");
+    delete trie;
 };
 
 TEST(TrieTests, addEmpty) {
@@ -17,9 +21,14 @@ TEST(TrieTests, addEmpty) {
     ASSERT_FALSE(trie.isWord(""));
 };
 
-TEST(TrieTests, checkEmpty) {
+TEST(TrieTests, checkEmptyIsWord) {
     Trie trie;
     trie.addWord("cat");
+    ASSERT_FALSE(trie.isWord(""));
+};
+
+TEST(TrieTests, checkEmptyTrie) {
+    Trie trie;
     ASSERT_FALSE(trie.isWord(""));
 };
 
@@ -35,6 +44,58 @@ TEST(TrieTests, returnEmptyPrefix) {
     vector.push_back("hello");
 
     ASSERT_EQ(vector, trie.allWordsStartingWithPrefix(""));
+};
+
+TEST(TrieTests, returnLongPrefixList) {
+    Trie trie;    
+    trie.addWord("applesauce");
+    trie.addWord("a");
+    trie.addWord("apple");
+    trie.addWord("aubergine");
+    trie.addWord("away");
+    trie.addWord("app");    
+    trie.addWord("angry");
+    trie.addWord("austin");
+    trie.addWord("awesome");
+    trie.addWord("agwen");
+    trie.addWord("abba");
+    trie.addWord("and");
+
+    vector<std::string> vector;
+    vector.push_back("a");
+    vector.push_back("abba");
+    vector.push_back("agwen");
+    vector.push_back("and");
+    vector.push_back("angry");
+    vector.push_back("app");
+    vector.push_back("apple");
+    vector.push_back("applesauce");
+    vector.push_back("aubergine");
+    vector.push_back("austin");
+    vector.push_back("away");
+    vector.push_back("awesome");
+
+    ASSERT_EQ(vector, trie.allWordsStartingWithPrefix("a"));
+};
+
+TEST(TrieTests, returnCaptitalPrefixList) {
+    Trie trie;    
+    trie.addWord("applesauce");
+    trie.addWord("a");
+    trie.addWord("apple");
+    trie.addWord("aubergine");
+    trie.addWord("away");
+    trie.addWord("app");    
+    trie.addWord("angry");
+    trie.addWord("austin");
+    trie.addWord("awesome");
+    trie.addWord("agwen");
+    trie.addWord("abba");
+    trie.addWord("and");
+
+    vector<std::string> vector;
+
+    ASSERT_EQ(vector, trie.allWordsStartingWithPrefix("A"));
 };
 
 TEST(TrieTests, returnPrefixWord) {
@@ -85,7 +146,6 @@ TEST(TrieTests, returnNonExistentPrefix) {
 
 TEST(TrieTests, isWordCapital) {
     Trie trie;
-
     trie.addWord("hello");
 
     ASSERT_FALSE(trie.isWord("Hello"));
