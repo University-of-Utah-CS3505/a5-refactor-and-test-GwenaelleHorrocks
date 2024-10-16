@@ -1,7 +1,17 @@
-/* 
-Austin Topham - Assignment4
-The Trie class provides functions to add and lookup various words in a dictionary.
+/* Austin Topham and Gwenaelle Horrocks - 10/15/24
+
+   github: users: austinreed37 GwenaelleHorrocks
+           repo: https://github.com/University-of-Utah-CS3505/a5-refactor-and-test-GwenaelleHorrocks
+
+   Assignment A5: Refactoring and Testing
+
+   This file is the .h file that declares all of the methods defined in Trie.cpp.
+   This is also a refactored version of assignment 04 in which the Trie object stores everything
+   in a map instead of an array of pointers. Methods includes rule of thirds, adding a word, checking
+   to see if a word is inside the Trie, and retrieving all the words that start with a particular 
+   prefix.
 */
+
 #ifndef Trie_H
 #define TRIE_H
 

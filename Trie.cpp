@@ -1,4 +1,16 @@
-/* Austin Topham - Assignment 4
+/* Austin Topham and Gwenaelle Horrocks - Assignment 5
+   10/15/24
+
+   github: users: austinreed37 GwenaelleHorrocks
+           repo: https://github.com/University-of-Utah-CS3505/a5-refactor-and-test-GwenaelleHorrocks
+
+   Assignment A5: Refactoring and Testing
+
+   This file is the .cpp file that defines all of the methods declared in Trie.h.
+   This is also a refactored version of assignment 04 in which the Trie object stores everything
+   in a map instead of an array of pointers. Methods includes rule of thirds, adding a word, checking
+   to see if a word is inside the Trie, and retrieving all the words that start with a particular 
+   prefix.
 */
 
 #include "Trie.h"
@@ -32,10 +44,10 @@ void Trie::addWord(string word) {
         return;
     }
 
-    // get the index of the first letter in word, set nextTrie equal to the trie in this trie's index
+    // get the first letter in word
     char letter = word[0];
-    //Trie* nextTrie = this->dictionary[letter];
 
+    // make a new Trie and add it to map if map doesn't contain letter
     if (!(dictionary.contains(letter))) {
         Trie newTrie;
         dictionary[letter] = newTrie;
@@ -57,7 +69,7 @@ bool Trie::isWord(string word) {
         return validWord;
     }
 
-    // get the index of the first letter in word, set nextTrie equal to the trie in this trie's index
+    // get first letter in word
     char letter = word[0];
     if (letter < 'a' || letter > 'z') {
         return false;
@@ -74,7 +86,6 @@ bool Trie::isWord(string word) {
 vector<string> Trie::allWordsStartingWithPrefix(string prefix) {
     vector<string> prefixWords;
     Trie currentTrie = *this;
-    Trie nextTrie;
 
     // iteratively navigate down the trie to the end of the prefix
     for (size_t i = 0; i < prefix.length(); i++) {

@@ -1,8 +1,18 @@
+/* Austin Topham and Gwenaelle Horrocks - Assignment 5
+   10/15/24
+
+   github: users: austinreed37 GwenaelleHorrocks
+           repo: https://github.com/University-of-Utah-CS3505/a5-refactor-and-test-GwenaelleHorrocks
+
+   Assignment A5: Refactoring and Testing
+
+   This file is the google tests file that tests a large range of cases such as edge and normal
+   for the Trie class. 
+*/
 #include "Trie.h"
 #include <vector>
 #include <gtest/gtest.h>
 
-// basic isWord
 TEST(TrieTests, basicIsWord) {
     Trie trie;
     trie.addWord("hello");
@@ -16,20 +26,25 @@ TEST(TrieTests, destructorOnTriePointer) {
 };
 
 TEST(TrieTests, addEmpty) {
+    // edge case 
     Trie trie;
     trie.addWord("");
     ASSERT_FALSE(trie.isWord(""));
 };
 
 TEST(TrieTests, checkEmptyIsWord) {
+    // edge case
     Trie trie;
     trie.addWord("cat");
     ASSERT_FALSE(trie.isWord(""));
 };
 
 TEST(TrieTests, checkEmptyTrie) {
+    // edge case making sure that a newly contructed Trie doesn't hold anything
     Trie trie;
+    vector<std::string> vector;
     ASSERT_FALSE(trie.isWord(""));
+    ASSERT_EQ(vector, trie.allWordsStartingWithPrefix(""));
 };
 
 TEST(TrieTests, returnEmptyPrefix) {
@@ -46,7 +61,7 @@ TEST(TrieTests, returnEmptyPrefix) {
     ASSERT_EQ(vector, trie.allWordsStartingWithPrefix(""));
 };
 
-TEST(TrieTests, returnLongPrefixList) {
+TEST(TrieTests, allWordsInTrieHaveSamePrefix) {
     Trie trie;    
     trie.addWord("applesauce");
     trie.addWord("a");
@@ -61,6 +76,7 @@ TEST(TrieTests, returnLongPrefixList) {
     trie.addWord("abba");
     trie.addWord("and");
 
+    // adds all the words in alphabetical order
     vector<std::string> vector;
     vector.push_back("a");
     vector.push_back("abba");
@@ -79,6 +95,7 @@ TEST(TrieTests, returnLongPrefixList) {
 };
 
 TEST(TrieTests, returnCaptitalPrefixList) {
+    // edge case with capitals
     Trie trie;    
     trie.addWord("applesauce");
     trie.addWord("a");
@@ -127,13 +144,14 @@ TEST(TrieTests, basicReturnPrefix) {
 };
 
 TEST(TrieTests, returnEmpty) {
+    // edge case
     Trie trie;   
     vector<std::string> vector = trie.allWordsStartingWithPrefix(""); 
-
     ASSERT_TRUE(vector.empty());
 };
 
 TEST(TrieTests, returnNonExistentPrefix) {
+    // edge case
     Trie trie; 
     trie.addWord("cat");
     trie.addWord("dog");
@@ -145,6 +163,7 @@ TEST(TrieTests, returnNonExistentPrefix) {
 
 
 TEST(TrieTests, isWordCapital) {
+    // edge case
     Trie trie;
     trie.addWord("hello");
 
@@ -179,6 +198,7 @@ TEST(TrieTests, copyConstructorNotDependent){
 }
 
 TEST(TrieTests, copyConstructorEmpty){
+    // edge case
     Trie trie;
     Trie copy = trie;
 
@@ -218,6 +238,7 @@ TEST(TrieTests, assignmentOperatorNotDependent){
 }
 
 TEST(TrieTests, assignmentOperatorEmpty){
+    // edge case
     Trie trie;
     Trie copy;
     copy = trie;
