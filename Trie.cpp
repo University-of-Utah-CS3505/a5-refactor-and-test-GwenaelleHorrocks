@@ -39,20 +39,19 @@ Trie& Trie::operator=(Trie other) {
 
 void Trie::addWord(string word) {
     
-    // when word is empty, the end of the word has been reached and the current trie can be marked as a valid word
+    // when word is empty, an empty string has been inputted and the function returns
     if (word.length() == 0) {
         return;
     }
 
-    // get the first letter in word
     char letter = word[0];
-
     // make a new Trie and add it to map if map doesn't contain letter
     if (!(dictionary.contains(letter))) {
         Trie newTrie;
         dictionary[letter] = newTrie;
     }
 
+    // when word has just one character, this character is marked as the end of a valid word and the function returns
     if (word.length() == 1) {
         dictionary[letter].validWord = true;
         return;
@@ -69,7 +68,6 @@ bool Trie::isWord(string word) {
         return validWord;
     }
 
-    // get first letter in word
     char letter = word[0];
     if (letter < 'a' || letter > 'z') {
         return false;
